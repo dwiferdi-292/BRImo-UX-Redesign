@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototype Worksheet 12 — Redesain Konfirmasi Transfer (konsep akademik)</title>
+<style>
+:root{
+  --pri:#00529C;--pri-d:#003B73;--acc:#F58220;--bg:#F2F5F9;--card:#fff;--tx:#1B2430;--mut:#6B7686;--line:#E3E8EF;
+  --ok:#12A150;--okbg:#E6F6EC;--warn:#B76E00;--warnbg:#FFF4E0;--err:#C62828;--errbg:#FDECEC;
+  --hero-bg:linear-gradient(135deg,#00529C 0%,#0B6BC4 100%);--hero-tx:#fff;--soft:#EAF2FB;
+  --font:'Inter','Roboto','Segoe UI',system-ui,sans-serif;
+}
+.wf{
+  --pri:#4A4A4A;--pri-d:#222;--acc:#8A8A8A;--bg:#F3F3F3;--card:#fff;--tx:#222;--mut:#7A7A7A;--line:#B5B5B5;
+  --ok:#555;--okbg:#EDEDED;--warn:#555;--warnbg:#EDEDED;--err:#555;--errbg:#EDEDED;
+  --hero-bg:#DADADA;--hero-tx:#222;--soft:#E8E8E8;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:var(--font);background:#CBD3DE;color:var(--tx);min-height:100vh;display:flex;gap:28px;justify-content:center;align-items:flex-start;padding:24px 16px;flex-wrap:wrap}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+input,select,textarea{font-family:inherit}
+svg.i{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* ===== Panel peneliti ===== */
+.panel{width:270px;background:#fff;border-radius:16px;padding:18px;box-shadow:0 6px 24px rgba(20,40,70,.12);font-size:13px;position:sticky;top:24px}
+.panel h1{font-size:15px;line-height:1.3;margin-bottom:4px}
+.panel p.sub{color:#6B7686;font-size:12px;margin-bottom:14px;line-height:1.4}
+.panel h2{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#6B7686;margin:14px 0 6px}
+.seg{display:flex;background:#EEF1F5;border-radius:10px;padding:3px}
+.seg button{flex:1;padding:8px 6px;border-radius:8px;font-size:12.5px;font-weight:600;color:#445}
+.seg button.on{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.15);color:#00529C}
+.jump{display:grid;gap:5px}
+.jump button{text-align:left;padding:8px 10px;border-radius:8px;background:#F4F6F9;font-size:12.5px;display:flex;gap:8px}
+.jump button b{color:#00529C;min-width:18px}
+.jump button.on{background:#DCEBFA}
+.reset{margin-top:12px;width:100%;padding:9px;border-radius:8px;border:1px solid #C9D2DE;font-size:12.5px;font-weight:600}
+.disc{margin-top:12px;font-size:11px;color:#6B7686;line-height:1.45;border-top:1px solid #E3E8EF;padding-top:10px}
+
+/* ===== Phone ===== */
+.phone{width:390px;height:844px;background:var(--bg);border-radius:38px;border:9px solid #10151C;position:relative;overflow:hidden;box-shadow:0 18px 50px rgba(10,20,40,.35);flex:none}
+.status{height:34px;background:var(--st-bg,transparent);position:absolute;top:0;left:0;right:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:6px 24px 0;font-size:12.5px;font-weight:700;pointer-events:none}
+.status .r{display:flex;gap:5px;align-items:center;font-size:11px}
+.status.light{color:#fff}
+.screen{position:absolute;inset:0;display:none;flex-direction:column;background:var(--bg);animation:in .22s ease}
+.screen.active{display:flex}
+@keyframes in{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+.scroll{flex:1;overflow-y:auto;scrollbar-width:none}
+.scroll::-webkit-scrollbar{display:none}
+.topbar{padding:40px 16px 12px;background:var(--card);display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);flex:none}
+.topbar h3{font-size:17px;font-weight:700;flex:1}
+.iconbtn{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--soft);color:var(--pri)}
+.steps{display:flex;gap:5px;padding:12px 16px 2px;align-items:center;font-size:11.5px;color:var(--mut);font-weight:600}
+.steps i{flex:1;height:4px;border-radius:3px;background:var(--line)}
+.steps i.d{background:var(--pri)}
+.steps span{margin-left:6px;white-space:nowrap}
+.pad{padding:12px 16px}
+.card{background:var(--card);border-radius:16px;padding:14px 16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(20,40,70,.07);position:relative}
+.wf .card{box-shadow:none;border:1.5px dashed var(--line)}
+.wf .topbar,.wf .bottom,.wf .nav{border-color:var(--line)}
+.lbl{font-size:12px;color:var(--mut);font-weight:600}
+.h-sec{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.h-sec b{font-size:13px;letter-spacing:.02em}
+.link{font-size:12.5px;font-weight:700;color:var(--pri);display:inline-flex;gap:4px;align-items:center;padding:4px 2px}
+.link svg.i{width:14px;height:14px}
+.btn{width:100%;padding:15px;border-radius:14px;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;transition:.15s}
+.btn.p{background:var(--pri);color:#fff}
+.btn.p:disabled{background:#B9C3D0;color:#fff;cursor:not-allowed}
+.wf .btn.p:disabled{background:#CFCFCF}
+.btn.s{background:var(--card);color:var(--pri);border:1.5px solid var(--pri)}
+.btn.t{color:var(--pri);padding:10px}
+.btn:active:not(:disabled){transform:scale(.98)}
+.bottom{flex:none;background:var(--card);padding:12px 16px 20px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+.bottom.brow{flex-direction:row;padding-left:16px;padding-right:16px}
+.bottom.brow .btn{width:auto;min-width:0;padding:15px 8px}.bottom.brow .btn.s{flex:1}.bottom.brow .btn.p{flex:1.35}
+.hint{font-size:11.5px;color:var(--mut);text-align:center;line-height:1.4}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:12.5px;font-weight:600;color:var(--mut);margin-bottom:6px}
+.inp{width:100%;padding:14px;border-radius:12px;border:1.5px solid var(--line);font-size:16px;background:#fff;color:var(--tx);outline:none}
+.inp:focus{border-color:var(--pri);box-shadow:0 0 0 3px rgba(0,82,156,.12)}
+.wf .inp:focus{box-shadow:none}
+.inp.err{border-color:var(--err)}
+.err-t{color:var(--err);font-size:12px;margin-top:5px;min-height:0;display:none;font-weight:600}
+.err-t.show{display:block}
+.tabs{display:flex;background:var(--soft);padding:4px;border-radius:12px;margin-bottom:14px}
+.tabs button{flex:1;padding:10px;border-radius:9px;font-size:13.5px;font-weight:700;color:var(--mut)}
+.tabs button.on{background:var(--card);color:var(--pri);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.wf .tabs button.on{box-shadow:none;border:1.5px solid var(--pri)}
+.person{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);width:100%;text-align:left}
+.person:last-child{border:0}
+.av{width:42px;height:42px;border-radius:50%;background:var(--soft);color:var(--pri);display:grid;place-items:center;font-weight:800;font-size:14px;flex:none}
+.person div b{display:block;font-size:14px}
+.person div span{font-size:12px;color:var(--mut)}
+.mono{font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:9px 0;font-size:13.5px}
+.row+.row{border-top:1px solid var(--line)}
+.row span:first-child{color:var(--mut)}
+.row b{text-align:right}
+.chips{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.chip{padding:7px 12px;border-radius:20px;background:var(--soft);color:var(--pri);font-size:12.5px;font-weight:700}
+.banner{display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border-radius:12px;background:var(--soft);color:var(--pri-d);font-size:12.5px;line-height:1.45;margin-bottom:12px}
+.banner.warn{background:var(--warnbg);color:var(--warn)}
+.banner svg.i{width:18px;height:18px;margin-top:1px}
+.banner.ok{background:var(--okbg);color:var(--ok)}
+
+/* Home */
+.hero{background:var(--hero-bg);color:var(--hero-tx);padding:46px 18px 70px;flex:none}
+.hero .top{display:flex;justify-content:space-between;align-items:center}
+.hero .logo{font-weight:900;font-size:21px;letter-spacing:-.02em}
+.hero .logo em{font-style:normal;color:var(--acc)}
+.wf .hero .logo em{color:inherit}
+.hero p{font-size:13px;opacity:.85;margin-top:14px}
+.hero h2{font-size:19px}
+.balance{margin:-52px 16px 0;background:var(--card);border-radius:18px;padding:16px;box-shadow:0 6px 18px rgba(0,40,90,.15);position:relative;z-index:2}
+.wf .balance{box-shadow:none;border:1.5px dashed var(--line)}
+.balance .amt{font-size:26px;font-weight:800;margin:4px 0 2px;display:flex;align-items:center;gap:10px}
+.menu{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:18px 16px 8px}
+.mi{display:flex;flex-direction:column;align-items:center;gap:7px;font-size:11.5px;font-weight:600;text-align:center;padding:4px 0}
+.mi .ic{width:52px;height:52px;border-radius:16px;background:var(--card);display:grid;place-items:center;color:var(--pri);box-shadow:0 1px 3px rgba(20,40,70,.1)}
+.wf .mi .ic{box-shadow:none;border:1.5px dashed var(--line)}
+.mi.hl .ic{background:var(--pri);color:#fff}
+.wf .mi.hl .ic{background:#444}
+.nav{flex:none;background:var(--card);border-top:1px solid var(--line);display:flex;padding:8px 6px 18px}
+.nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;font-weight:600;color:var(--mut)}
+.nav button.on{color:var(--pri)}
+.tip{margin:6px 16px 16px;padding:14px;border-radius:14px;background:var(--card);display:flex;gap:12px;font-size:12.5px;line-height:1.45;color:var(--mut)}
+.wf .tip{border:1.5px dashed var(--line)}
+
+/* Confirm */
+.hero-name{display:flex;gap:12px;align-items:center;margin-bottom:12px}
+.hero-name .av{width:48px;height:48px;font-size:16px}
+.name-big{font-size:19px;font-weight:800;line-height:1.2;letter-spacing:.01em}
+.acc-big{font-size:20px;font-weight:800;letter-spacing:.05em;margin:2px 0}
+.nom-big{font-size:32px;font-weight:800;color:var(--pri-d);letter-spacing:-.01em;margin:4px 0 2px}
+.terb{font-size:12px;color:var(--mut);font-style:italic}
+.total{display:flex;justify-content:space-between;align-items:center;padding-top:12px;margin-top:4px;border-top:2px solid var(--line);font-weight:800}
+.total b{font-size:18px}
+.sep{height:1px;background:var(--line);margin:10px 0}
+.nb{display:none;position:absolute;top:-8px;left:-6px;width:22px;height:22px;border-radius:50%;background:#E53935;color:#fff;font:700 11px/22px var(--font);text-align:center;font-style:normal;z-index:5;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.wf .nb{display:block}
+.nb.r{left:auto;right:-6px}
+
+/* Auth */
+.shield{width:92px;height:92px;border-radius:50%;background:var(--soft);display:grid;place-items:center;margin:8px auto 10px;color:var(--pri)}
+.shield svg.i{width:48px;height:48px;stroke-width:1.5}
+.fp{width:110px;height:110px;border-radius:50%;margin:18px auto 8px;border:2px dashed var(--pri);display:grid;place-items:center;color:var(--pri);position:relative;background:var(--card)}
+.fp svg.i{width:54px;height:54px;stroke-width:1.4}
+.fp.go{animation:pulse .9s ease infinite;border-style:solid}
+@keyframes pulse{50%{box-shadow:0 0 0 14px rgba(0,82,156,.12)}}
+.prog{height:6px;border-radius:4px;background:var(--line);margin:14px auto 0;width:180px;overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--pri);transition:width 1.4s linear}
+
+/* Status */
+.st-top{text-align:center;padding:52px 20px 16px}
+.st-ic{width:84px;height:84px;border-radius:50%;margin:0 auto 14px;display:grid;place-items:center}
+.st-ic svg.i{width:44px;height:44px;stroke-width:2.2}
+.st-ic.ok{background:var(--okbg);color:var(--ok)}
+.st-ic.wn{background:var(--warnbg);color:var(--warn)}
+.st-top h2{font-size:21px;margin-bottom:4px}
+.st-top .nom{font-size:30px;font-weight:800;margin:10px 0 2px}
+.st-top p{font-size:13px;color:var(--mut);line-height:1.5}
+.todo{counter-reset:n;list-style:none;font-size:13px;line-height:1.45}
+.todo li{counter-increment:n;display:flex;gap:10px;padding:6px 0}
+.todo li::before{content:counter(n);width:22px;height:22px;border-radius:50%;background:var(--warn);color:#fff;font-weight:700;font-size:11.5px;display:grid;place-items:center;flex:none;margin-top:1px}
+.wf .todo li::before{background:#666}
+.chk{font-size:12.5px;margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--soft);color:var(--pri-d);display:none;line-height:1.45}
+.chk.show{display:block}
+
+/* sheet & toast */
+.sheet-bg{position:absolute;inset:0;background:rgba(10,20,35,.45);z-index:40;display:none;align-items:flex-end}
+.sheet-bg.show{display:flex}
+.sheet{background:#fff;width:100%;border-radius:22px 22px 0 0;padding:20px 18px 26px;animation:up .22s ease}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+.sheet h4{font-size:16px;margin-bottom:8px}
+.sheet p{font-size:13px;color:var(--mut);line-height:1.5;margin-bottom:14px}
+.toast{position:absolute;left:20px;right:20px;bottom:96px;background:#1B2430;color:#fff;padding:11px 14px;border-radius:12px;font-size:12.5px;z-index:50;opacity:0;pointer-events:none;transition:.25s;text-align:center;line-height:1.4}
+.toast.show{opacity:1}
+.spin{width:18px;height:18px;border:2.5px solid currentColor;border-right-color:transparent;border-radius:50%;animation:sp .7s linear infinite;display:none}
+.loading .spin{display:inline-block}
+@keyframes sp{to{transform:rotate(360deg)}}
+@media(max-width:760px){
+  body{padding:0;gap:0;background:var(--bg-m,#CBD3DE)}
+  .panel{position:static;width:100%;border-radius:0}
+  .phone{width:100vw;height:100svh;border:0;border-radius:0;order:-1}
+}
+body.nopanel .panel{display:none}
+body.nopanel{padding:0;background:transparent}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+<defs>
+<symbol id="home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></symbol>
+<symbol id="transfer" viewBox="0 0 24 24"><path d="M7 7h13l-4-4M17 17H4l4 4"/></symbol>
+<symbol id="receipt" viewBox="0 0 24 24"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2zM9 7h6M9 11h6"/></symbol>
+<symbol id="qr" viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h3v3h-3zM20 14v7M14 20h3"/></symbol>
+<symbol id="user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+<symbol id="shield" viewBox="0 0 24 24"><path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z"/><path d="M9 12l2 2 4-4"/></symbol>
+<symbol id="check" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></symbol>
+<symbol id="clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+<symbol id="alert" viewBox="0 0 24 24"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18v.01"/></symbol>
+<symbol id="back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+<symbol id="edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/></symbol>
+<symbol id="eye" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="eyeoff" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><path d="M3 3l18 18"/></symbol>
+<symbol id="bank" viewBox="0 0 24 24"><path d="M3 10l9-6 9 6M5 10v8M9 10v8M15 10v8M19 10v8M3 21h18"/></symbol>
+<symbol id="wallet" viewBox="0 0 24 24"><path d="M3 7h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM3 7l3-3h11M16 14h2"/></symbol>
+<symbol id="phone" viewBox="0 0 24 24"><path d="M7 2h10v20H7zM11 19h2"/></symbol>
+<symbol id="bill" viewBox="0 0 24 24"><path d="M4 3h16v18H4zM8 8h8M8 12h8M8 16h4"/></symbol>
+<symbol id="fp" viewBox="0 0 24 24"><path d="M5 12a7 7 0 0 1 14 0M8 12a4 4 0 0 1 8 0v3M12 12v6M9 20c1-2 1-4 1-6M15 20c.5-1.5 1-3 1-5M3 9a10 10 0 0 1 18 0"/></symbol>
+<symbol id="help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 1-1 1.7M12 17v.01"/></symbol>
+<symbol id="info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></symbol>
+<symbol id="grid" viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></symbol>
+<symbol id="chev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+<symbol id="save" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></symbol>
+</defs>
+</svg>
+
+<!-- ============ PANEL ============ -->
+<aside class="panel" id="panel">
+  <h1>Prototype Worksheet 12<br>Konfirmasi Transfer</h1>
+  <p class="sub">Rekayasa Interaksi (UX) · Terinspirasi BRImo. Prototype akademik — bukan desain resmi BRI.</p>
+  <h2>Tampilan</h2>
+  <div class="seg" id="segMode"><button data-v="wf">Wireframe</button><button data-v="hf" class="on">Visual</button></div>
+  <h2>Hasil simulasi transaksi</h2>
+  <div class="seg" id="segScn"><button data-v="ok" class="on">Berhasil</button><button data-v="pending">Status belum pasti</button></div>
+  <h2>Lompat ke layar</h2>
+  <div class="jump" id="jump"></div>
+  <button class="reset" id="resetBtn">↺ Ulangi dari awal</button>
+  <p class="disc">Tidak ada transaksi nyata, API bank, PIN, OTP, atau password. Autentikasi hanya simulasi visual.</p>
+</aside>
+
+<!-- ============ PHONE ============ -->
+<main class="phone" id="device">
+  <div class="status" id="statusBar"><span>09:41</span><span class="r">●●●● 5G ▮</span></div>
+
+  <!-- 1. BERANDA -->
+  <section class="screen" id="s-home" data-title="Beranda">
+    <div class="scroll">
+      <div class="hero">
+      <div class="top"><span class="logo" style="font-size:16px;line-height:1.15">Redesain Konfirmasi Transfer<br><small style="font-size:10.5px;font-weight:600;opacity:.85">Konsep terinspirasi BRImo · bukan aplikasi resmi BRI</small></span><span class="iconbtn" style="background:rgba(255,255,255,.18);color:inherit"><svg class="i"><use href="#help"/></svg></span></div>
+      <p>Selamat datang,</p><h2>Dimas Pratama</h2>
+    </div>
+      <div class="balance" style="margin-top:-52px">
+        <div class="lbl">Saldo Tabungan BRI • 0000 0000 4821</div>
+        <div class="amt"><span id="balTxt">Rp 12.450.000</span><button class="iconbtn" id="eyeBtn" aria-label="Tampilkan/sembunyikan saldo"><svg class="i"><use href="#eye"/></svg></button></div>
+        <div class="lbl" style="font-weight:500">Saldo tersedia</div>
+      </div>
+      <div class="menu">
+        <button class="mi hl" id="menuTransfer"><span class="ic"><svg class="i"><use href="#transfer"/></svg></span>Transfer</button>
+        <button class="mi" id="menuHist"><span class="ic"><svg class="i"><use href="#receipt"/></svg></span>Riwayat</button>
+        <button class="mi dead"><span class="ic"><svg class="i"><use href="#bill"/></svg></span>BRIVA</button>
+        <button class="mi dead"><span class="ic"><svg class="i"><use href="#wallet"/></svg></span>E-Wallet</button>
+        <button class="mi dead"><span class="ic"><svg class="i"><use href="#phone"/></svg></span>Pulsa/Data</button>
+        <button class="mi dead"><span class="ic"><svg class="i"><use href="#bank"/></svg></span>Setor/Tarik</button>
+        <button class="mi dead"><span class="ic"><svg class="i"><use href="#qr"/></svg></span>QRIS</button>
+        <button class="mi dead"><span class="ic"><svg class="i"><use href="#grid"/></svg></span>Lainnya</button>
+      </div>
+      <div class="tip"><svg class="i" style="color:var(--pri)"><use href="#shield"/></svg><div><b style="color:var(--tx)">Periksa sebelum konfirmasi</b><br>Pastikan nama penerima, rekening, dan nominal sudah benar sebelum menyelesaikan transfer.</div></div>
+    </div>
+    <nav class="nav">
+      <button class="on"><svg class="i"><use href="#home"/></svg>Beranda</button>
+      <button class="dead"><svg class="i"><use href="#receipt"/></svg>Mutasi</button>
+      <button class="dead"><svg class="i"><use href="#qr"/></svg>QRIS</button>
+      <button id="navHist"><svg class="i"><use href="#clock"/></svg>Riwayat</button>
+      <button class="dead"><svg class="i"><use href="#user"/></svg>Akun</button>
+    </nav>
+  </section>
+
+  <!-- 2. MENU TRANSFER -->
+  <section class="screen" id="s-transfer" data-title="Menu Transfer">
+    <div class="topbar"><button class="iconbtn" data-back aria-label="Kembali"><svg class="i"><use href="#back"/></svg></button><h3>Transfer</h3></div>
+    <div class="steps"><i class="d"></i><i></i><i></i><i></i><span>1 dari 4 · Tujuan</span></div>
+    <div class="scroll pad">
+      <div class="tabs" id="tabType"><button data-t="bri" class="on">Sesama BRI</button><button data-t="bank">Antarbank</button></div>
+      <div class="field" id="bankField" style="display:none">
+        <label for="bankSel">Bank tujuan</label>
+        <select class="inp" id="bankSel"><option>Bank Mandiri</option><option>Bank BCA</option><option>Bank BNI</option><option>Bank BSI</option></select>
+      </div>
+      <div class="field">
+        <label for="accIn">Nomor rekening tujuan</label>
+        <input class="inp mono" id="accIn" inputmode="numeric" autocomplete="off" placeholder="Contoh: 1234 5678 9012 345" maxlength="22">
+        <div class="err-t" id="accErr" role="alert"></div>
+      </div>
+      <div class="lbl" style="margin:16px 0 4px">Penerima tersimpan</div>
+      <div class="card" style="padding:4px 14px" id="saved"></div>
+    </div>
+    <div class="bottom"><button class="btn p" id="toDetail">Lanjutkan</button></div>
+  </section>
+
+  <!-- 3. INPUT DETAIL -->
+  <section class="screen" id="s-detail" data-title="Input Detail Transfer">
+    <div class="topbar"><button class="iconbtn" data-back aria-label="Kembali"><svg class="i"><use href="#back"/></svg></button><h3>Detail Transfer</h3></div>
+    <div class="steps"><i class="d"></i><i class="d"></i><i></i><i></i><span>2 dari 4 · Nominal</span></div>
+    <div class="scroll pad">
+      <div class="card">
+        <div class="h-sec"><span class="lbl">Rekening penerima</span><button class="link" data-goto="transfer"><svg class="i"><use href="#edit"/></svg>Ubah</button></div>
+        <div style="display:flex;gap:12px;align-items:center"><div class="av" id="d-av">AP</div><div><b id="d-name" style="font-size:15px">ANDI PRATAMA</b><div class="mono" id="d-acc" style="font-size:13px;margin-top:2px">—</div><div class="lbl" id="d-bank" style="font-weight:500">Bank</div></div></div>
+      </div>
+      <div class="field">
+        <label for="amtIn">Nominal transfer</label>
+        <input class="inp mono" id="amtIn" inputmode="numeric" autocomplete="off" placeholder="Rp 0" style="font-size:22px;font-weight:800">
+        <div class="err-t" id="amtErr" role="alert"></div>
+        <div class="chips"><button class="chip" data-a="50000">50 rb</button><button class="chip" data-a="100000">100 rb</button><button class="chip" data-a="500000">500 rb</button><button class="chip" data-a="1000000">1 jt</button></div>
+      </div>
+      <div class="field">
+        <label for="noteIn">Keterangan (opsional)</label>
+        <input class="inp" id="noteIn" maxlength="30" placeholder="Contoh: Patungan makan">
+      </div>
+      <div class="card">
+        <div class="row" style="padding-top:0"><span>Biaya administrasi</span><b id="d-fee">Rp 0</b></div>
+        <div class="row" style="padding-bottom:0"><span>Estimasi total</span><b id="d-tot">Rp 0</b></div>
+      </div>
+    </div>
+    <div class="bottom"><button class="btn p" id="toConfirm" disabled>Lanjutkan ke Konfirmasi</button></div>
+  </section>
+
+  <!-- 4. KONFIRMASI -->
+  <section class="screen" id="s-confirm" data-title="Konfirmasi Detail Transfer">
+    <div class="topbar"><i class="nb" style="top:34px;left:2px">1</i><button class="iconbtn" data-back aria-label="Kembali"><svg class="i"><use href="#back"/></svg></button><h3>Konfirmasi Transfer</h3></div>
+    <div class="steps"><i class="d"></i><i class="d"></i><i class="d"></i><i></i><span>3 dari 4 · Periksa</span></div>
+    <div class="scroll pad">
+      <div class="banner" style="position:relative"><i class="nb">2</i><svg class="i"><use href="#info"/></svg><div>Periksa kembali data berikut. <b>Transaksi belum diproses</b> sebelum Anda memverifikasi.</div></div>
+
+      <div class="card">
+        <div class="h-sec"><span class="lbl">PENERIMA</span><button class="link" data-goto="transfer"><svg class="i"><use href="#edit"/></svg>Ubah</button></div>
+        <div class="hero-name" style="position:relative"><i class="nb" style="left:-15px;top:0">3</i><div class="av" id="c-av">AP</div><div><div class="lbl" style="font-weight:500">Nama penerima</div><div class="name-big" id="c-name">ANDI PRATAMA</div></div></div>
+        <div style="position:relative"><i class="nb" style="left:-15px;top:0">4</i><div class="lbl" style="font-weight:500">Nomor rekening tujuan</div><div class="acc-big mono" id="c-acc">—</div></div>
+        <div class="sep"></div>
+        <div class="row" style="padding:0;position:relative"><i class="nb" style="left:-15px;top:0">5</i><span>Bank tujuan</span><b id="c-bank">Bank BRI</b></div>
+      </div>
+
+      <div class="card">
+        <i class="nb">6</i>
+        <div class="h-sec"><span class="lbl">NOMINAL TRANSFER</span><button class="link" data-goto="detail"><svg class="i"><use href="#edit"/></svg>Ubah</button></div>
+        <div class="nom-big mono" id="c-amt">Rp 0</div>
+        <div class="terb" id="c-terb"></div>
+      </div>
+
+      <div class="card" style="margin-bottom:6px">
+        <i class="nb">7</i>
+        <div class="row" style="padding-top:0"><span>Biaya administrasi</span><b id="c-fee">Rp 0</b></div>
+        <div class="row"><span>Keterangan</span><b id="c-note">—</b></div>
+        <div class="row"><span>Sumber dana</span><b>Tabungan BRI •••• 4821</b></div>
+        <div class="total"><span>Total transaksi</span><b class="mono" id="c-tot">Rp 0</b></div>
+      </div>
+    </div>
+    <div class="bottom brow" style="padding-top:12px">
+      <button class="btn s" data-back style="position:relative"><i class="nb" style="top:-14px">8</i>Ubah Data</button>
+      <button class="btn p" id="btnConfirm" style="position:relative"><i class="nb r" style="top:-14px">9</i>Konfirmasi</button>
+    </div>
+  </section>
+
+  <!-- 5. AUTENTIKASI -->
+  <section class="screen" id="s-auth" data-title="Autentikasi / Konfirmasi Akhir">
+    <div class="topbar"><button class="iconbtn" data-back aria-label="Kembali"><svg class="i"><use href="#back"/></svg></button><h3>Verifikasi Transaksi</h3></div>
+    <div class="steps"><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><span>4 dari 4 · Verifikasi</span></div>
+    <div class="scroll pad">
+      <div class="shield"><svg class="i"><use href="#shield"/></svg></div>
+      <div style="text-align:center;font-weight:800;font-size:17px">Verifikasi untuk menyelesaikan</div>
+      <div style="text-align:center;font-size:12.5px;color:var(--mut);margin:4px 0 14px">Transfer akan diproses setelah verifikasi simulasi berhasil.</div>
+      <div class="card">
+        <div class="row" style="padding-top:0"><span>Penerima</span><b id="a-name">—</b></div>
+        <div class="row"><span>Rekening</span><b class="mono" id="a-acc">—</b></div>
+        <div class="row" style="padding-bottom:0"><span>Total</span><b class="mono" id="a-tot">—</b></div>
+      </div>
+      <div style="text-align:center">
+        <button class="fp" id="fpBtn" aria-label="Simulasikan verifikasi"><svg class="i"><use href="#fp"/></svg></button>
+        <div style="font-size:13px;font-weight:700;color:var(--pri)" id="fpTxt">Ketuk untuk simulasi verifikasi</div>
+        <div class="prog"><i id="fpProg"></i></div>
+      </div>
+      <div class="banner warn" style="margin-top:18px"><svg class="i"><use href="#alert"/></svg><div><b>Mode simulasi.</b> Prototype ini tidak meminta PIN, OTP, atau password asli. Jangan memasukkan data rahasia.</div></div>
+    </div>
+    <div class="bottom"><button class="btn s" data-back>Kembali & Periksa Lagi</button></div>
+  </section>
+
+  <!-- 6. SUKSES -->
+  <section class="screen" id="s-success" data-title="Status Transaksi — Berhasil">
+    <div class="scroll">
+      <div class="st-top">
+        <div class="st-ic ok"><svg class="i"><use href="#check"/></svg></div>
+        <h2>Transfer Berhasil</h2>
+        <p>Dana telah dikirim ke <b id="s-name2">—</b></p>
+        <div class="nom mono" id="s-amt">Rp 0</div>
+      </div>
+      <div class="pad" style="padding-top:0">
+        <div class="card">
+          <div class="row" style="padding-top:0"><span>Penerima</span><b id="s-name">—</b></div>
+          <div class="row"><span>Rekening tujuan</span><b class="mono" id="s-acc">—</b></div>
+          <div class="row"><span>Bank tujuan</span><b id="s-bank">—</b></div>
+          <div class="row"><span>Tanggal & waktu (simulasi)</span><b id="s-time">—</b></div>
+          <div class="row" style="padding-bottom:0"><span>No. referensi</span><b class="mono" id="s-ref">—</b></div>
+        </div>
+        <div class="hint">Simpan nomor referensi sebagai bukti transaksi.</div>
+      </div>
+    </div>
+    <div class="bottom"><button class="btn s" id="btnDetail">Lihat Detail</button><button class="btn p" data-home>Kembali ke Beranda</button></div>
+  </section>
+
+  <!-- 6b. PENDING -->
+  <section class="screen" id="s-pending" data-title="Status Transaksi — Belum Pasti">
+    <div class="scroll">
+      <div class="st-top" style="padding-bottom:8px">
+        <div class="st-ic wn"><svg class="i"><use href="#clock"/></svg></div>
+        <h2>Status Transfer Belum Pasti</h2>
+        <p>Kami belum menerima konfirmasi akhir dari bank tujuan. Hal ini dapat terjadi karena gangguan jaringan atau proses di bank penerima.</p>
+      </div>
+      <div class="pad" style="padding-top:4px">
+        <div class="banner warn"><svg class="i"><use href="#alert"/></svg><div><b>Jangan ulangi transfer dulu.</b> Mengulang sebelum status jelas dapat menyebabkan transaksi ganda.</div></div>
+        <div class="card">
+          <div class="lbl" style="margin-bottom:4px">Yang perlu Anda lakukan</div>
+          <ol class="todo"><li>Periksa status transaksi dengan tombol di bawah.</li><li>Catat nomor referensi transaksi ini.</li><li>Jika status tetap belum jelas, hubungi bantuan.</li></ol>
+          <div class="chk" id="chkBox"></div>
+        </div>
+        <div class="card">
+          <div class="row" style="padding-top:0"><span>Penerima</span><b id="p-name">—</b></div>
+          <div class="row"><span>Nominal</span><b class="mono" id="p-amt">—</b></div>
+          <div class="row" style="padding-bottom:0"><span>No. referensi</span><b class="mono" id="p-ref">—</b></div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom">
+      <button class="btn p" id="btnCheck"><span class="spin"></span><span id="btnCheckT">Periksa Status Transaksi</span></button>
+      <button class="btn s" id="btnHelp">Hubungi Bantuan</button>
+      <button class="btn t" data-home>Kembali ke Beranda</button>
+    </div>
+  </section>
+
+  <!-- 7. DETAIL / BUKTI -->
+  <section class="screen" id="s-receipt" data-title="Ringkasan / Bukti Transaksi">
+    <div class="topbar"><button class="iconbtn" data-back aria-label="Kembali"><svg class="i"><use href="#back"/></svg></button><h3>Bukti Transaksi</h3></div>
+    <div class="scroll pad">
+      <div class="card" style="text-align:center">
+        <div class="st-ic ok" style="width:56px;height:56px;margin-bottom:8px"><svg class="i" style="width:30px;height:30px"><use href="#check"/></svg></div>
+        <b style="color:var(--ok)">Transfer Berhasil</b>
+        <div class="nom-big mono" id="r-amt" style="font-size:28px">Rp 0</div>
+      </div>
+      <div class="card">
+        <div class="row" style="padding-top:0"><span>Nama penerima</span><b id="r-name">—</b></div>
+        <div class="row"><span>Rekening tujuan</span><b class="mono" id="r-acc">—</b></div>
+        <div class="row"><span>Bank tujuan</span><b id="r-bank">—</b></div>
+        <div class="row"><span>Nominal</span><b class="mono" id="r-amt2">—</b></div>
+        <div class="row"><span>Biaya administrasi</span><b id="r-fee">—</b></div>
+        <div class="row"><span>Keterangan</span><b id="r-note">—</b></div>
+        <div class="row"><span>Total transaksi</span><b class="mono" id="r-tot">—</b></div>
+        <div class="row"><span>Tanggal & waktu</span><b id="r-time">—</b></div>
+        <div class="row" style="padding-bottom:0"><span>No. referensi</span><b class="mono" id="r-ref">—</b></div>
+      </div>
+      <div class="hint">Bukti simulasi — bukan dokumen transaksi resmi.</div>
+    </div>
+    <div class="bottom"><button class="btn s" id="btnSave"><svg class="i"><use href="#save"/></svg>Simpan Bukti (simulasi)</button><button class="btn p" data-home>Kembali ke Beranda</button></div>
+  </section>
+
+  <!-- 8. RIWAYAT -->
+  <section class="screen" id="s-history" data-title="Riwayat Transaksi">
+    <div class="topbar"><button class="iconbtn" data-back aria-label="Kembali"><svg class="i"><use href="#back"/></svg></button><h3>Riwayat Transaksi</h3></div>
+    <div class="scroll pad">
+      <div class="hint" style="margin-top:0">Ketuk transaksi untuk melihat bukti atau memeriksa statusnya.</div>
+      <div id="histList"></div>
+      <div class="hint" id="histEmpty" style="display:none">Belum ada transaksi.</div>
+    </div>
+    <div class="bottom"><button class="btn p" data-home>Kembali ke Beranda</button></div>
+  </section>
+
+  <div class="sheet-bg" id="sheetBg"><div class="sheet">
+    <h4>Hubungi Bantuan (simulasi)</h4>
+    <p>Di aplikasi sungguhan, bagian ini mengarahkan ke layanan bantuan resmi. Sampaikan nomor referensi transaksi: <b class="mono" id="h-ref">—</b>. Tidak ada kontak nyata di prototype ini.</p>
+    <button class="btn p" id="sheetClose">Mengerti</button>
+  </div></div>
+  <div class="toast" id="toast"></div>
+</main>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const rp=n=>'Rp '+Number(n).toLocaleString('id-ID');
+const group=s=>s.replace(/\D/g,'').replace(/(.{4})/g,'$1 ').trim();
+const SAVED=[
+ {name:'ANDI PRATAMA',acc:'123456789012345',bank:'Bank BRI',t:'bri'},
+ {name:'SITI RAHMAWATI',acc:'9876543210987',bank:'Bank Mandiri',t:'bank'},
+ {name:'BUDI SANTOSO',acc:'111122223333444',bank:'Bank BRI',t:'bri'}];
+const NAMES=['RINA AMELIA','FAJAR NUGRAHA','DEWI LESTARI','HENDRA WIJAYA','MAYA PUTRI','AGUS SETIAWAN'];
+const SCREENS=[['home','Beranda'],['transfer','Menu Transfer'],['detail','Input Detail Transfer'],['confirm','Konfirmasi Detail Transfer'],['auth','Autentikasi (simulasi)'],['success','Status: Berhasil'],['pending','Status: Belum Pasti'],['receipt','Lihat Detail / Bukti'],['history','Riwayat Transaksi']];
+const S={cur:'home',stack:[],type:'bri',bank:'Bank BRI',acc:'',name:'',amount:0,note:'',scn:'ok',ref:'',time:'',checks:0,hidden:false};
+const FEE={bri:0,bank:2500};
+
+function terbilang(n){
+ const a=['','satu','dua','tiga','empat','lima','enam','tujuh','delapan','sembilan','sepuluh','sebelas'];
+ if(n<12)return a[n];
+ if(n<20)return terbilang(n-10)+' belas';
+ if(n<100)return a[Math.floor(n/10)]+' puluh'+(n%10?' '+a[n%10]:'');
+ if(n<200)return 'seratus'+(n%100?' '+terbilang(n%100):'');
+ if(n<1000)return a[Math.floor(n/100)]+' ratus'+(n%100?' '+terbilang(n%100):'');
+ if(n<2000)return 'seribu'+(n%1000?' '+terbilang(n%1000):'');
+ if(n<1e6)return terbilang(Math.floor(n/1000))+' ribu'+(n%1000?' '+terbilang(n%1000):'');
+ if(n<1e9)return terbilang(Math.floor(n/1e6))+' juta'+(n%1e6?' '+terbilang(n%1e6):'');
+ return terbilang(Math.floor(n/1e9))+' miliar'+(n%1e9?' '+terbilang(n%1e9):'');
+}
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+const initials=n=>n.split(' ').slice(0,2).map(w=>w[0]).join('');
+function lookup(acc){
+ const s=SAVED.find(x=>x.acc===acc); if(s)return s.name;
+ const sum=[...acc].reduce((p,c)=>p+ +c,0); return NAMES[sum%NAMES.length];
+}
+let toastT;
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2200)}
+function defaults(){
+ if(!S.acc){S.acc='123456789012345';S.name='ANDI PRATAMA';S.type='bri';S.bank='Bank BRI'}
+ if(!S.amount){S.amount=250000;S.note='Patungan makan'}
+ if(!S.ref)newTx();
+}
+function newTx(){
+ S.ref='SIM-'+String(Math.floor(Math.random()*1e10)).padStart(10,'0');
+ const d=new Date();
+ S.time=d.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'})+', '+d.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}).replace('.',':')+' WIB';
+}
+function fill(){
+ const fee=FEE[S.type], tot=S.amount+fee;
+ const set=(id,v)=>{const e=$('#'+id);if(e)e.textContent=v};
+ const accF=group(S.acc);
+ set('d-av',initials(S.name||'AP'));set('d-name',S.name);set('d-acc',accF);set('d-bank',S.bank);
+ set('d-fee',fee?rp(fee):'Gratis (Rp 0)');set('d-tot',rp(S.amount+fee));
+ set('c-av',initials(S.name||'AP'));set('c-name',S.name);set('c-acc',accF);set('c-bank',S.bank);
+ set('c-amt',rp(S.amount));set('c-terb',S.amount?cap(terbilang(S.amount))+' rupiah':'');
+ set('c-fee',fee?rp(fee):'Gratis (Rp 0)');set('c-note',S.note||'—');set('c-tot',rp(tot));
+ set('a-name',S.name);set('a-acc',accF);set('a-tot',rp(tot));
+ set('s-name',S.name);set('s-name2',S.name);set('s-acc',accF);set('s-bank',S.bank);set('s-amt',rp(S.amount));set('s-time',S.time);set('s-ref',S.ref);
+ set('p-name',S.name);set('p-amt',rp(S.amount));set('p-ref',S.ref);set('h-ref',S.ref);
+ set('r-amt',rp(S.amount));set('r-amt2',rp(S.amount));set('r-name',S.name);set('r-acc',accF);set('r-bank',S.bank);
+ set('r-fee',fee?rp(fee):'Gratis (Rp 0)');set('r-note',S.note||'—');set('r-tot',rp(tot));set('r-time',S.time);set('r-ref',S.ref);
+}
+function show(id,push=true){
+ if(push&&S.cur!==id)S.stack.push(S.cur);
+ S.cur=id;
+ $$('.screen').forEach(s=>s.classList.toggle('active',s.id==='s-'+id));
+ $('#statusBar').classList.toggle('light',id==='home'&&!$("#device").classList.contains('wf'));
+ $$('#jump button').forEach(b=>b.classList.toggle('on',b.dataset.s===id));
+ const sc=$('#s-'+id+' .scroll');if(sc)sc.scrollTop=0;
+ fill();
+ if(id==='success')recordTx('Berhasil');
+ if(id==='pending')recordTx('Diproses');
+ if(id==='history')renderHist();
+ if(id==='auth')resetAuth();
+ if(id==='transfer')refreshTransfer();
+ if(id==='detail')refreshDetail();
+ if(id==='pending'){S.checks=0;$('#chkBox').classList.remove('show');$('#btnCheckT').textContent='Periksa Status Transaksi'}
+ history.replaceState(null,'','#'+id);
+}
+function back(){
+ const p=S.stack.pop();
+ if(p)show(p,false);else show('home',false);
+}
+function home(){S.stack=[];show('home',false)}
+
+/* ===== Beranda ===== */
+$('#eyeBtn').onclick=()=>{S.hidden=!S.hidden;$('#balTxt').textContent=S.hidden?'Rp ••••••••':'Rp 12.450.000';$('#eyeBtn use').setAttribute('href',S.hidden?'#eyeoff':'#eye')};
+$('#menuTransfer').onclick=()=>show('transfer');
+$$('.dead').forEach(b=>b.onclick=()=>toast('Menu ini tidak tersedia di prototype. Coba menu Transfer.'));
+
+
+/* ===== Riwayat (FR-06) ===== */
+const HIST=[
+ {ref:'TRF-0000000412',name:'SITI RAHMAWATI',acc:'9876543210987',bank:'Bank Mandiri',type:'bank',amount:150000,note:'Bayar kos',time:'20 Nov 2026, 14:05 WIB',status:'Berhasil'},
+ {ref:'TRF-0000000398',name:'BUDI SANTOSO',acc:'555500001111222',bank:'Bank BRI',type:'bri',amount:75000,note:'Iuran',time:'15 Nov 2026, 09:12 WIB',status:'Berhasil'},
+ {ref:'TRF-0000000377',name:'ANDI PRATAMA',acc:'123456789012345',bank:'Bank BRI',type:'bri',amount:500000,note:'Patungan',time:'02 Nov 2026, 19:40 WIB',status:'Berhasil'}];
+function recordTx(st){
+ const e=HIST.find(x=>x.ref===S.ref);
+ if(e){e.status=st;return}
+ HIST.unshift({ref:S.ref,name:S.name,acc:S.acc,bank:S.bank,type:S.type,amount:S.amount,note:S.note,time:S.time,status:st});
+}
+function renderHist(){
+ const L=$('#histList');
+ L.innerHTML=HIST.map((e,i)=>`<button class="card hrow" data-i="${i}" style="width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer"><span><b>${e.name}</b><br><small style="color:var(--mut)">${e.bank} · ${e.time}</small></span><span style="text-align:right"><b class="mono">${rp(e.amount)}</b><br><small style="font-weight:700;color:${e.status==='Berhasil'?'var(--ok)':'var(--warn)'}">${e.status==='Berhasil'?'Berhasil':'Sedang diproses'}</small></span></button>`).join('');
+ $('#histEmpty').style.display=HIST.length?'none':'block';
+ $$('.hrow').forEach(b=>b.onclick=()=>{
+  const e=HIST[+b.dataset.i];
+  Object.assign(S,{name:e.name,acc:e.acc,bank:e.bank,type:e.type,amount:e.amount,note:e.note,time:e.time,ref:e.ref});
+  S.stack=['home','history'];show(e.status==='Berhasil'?'receipt':'pending',false);
+ });
+}
+$('#menuHist').onclick=()=>show('history');
+$('#navHist').onclick=()=>show('history');
+
+/* ===== Transfer ===== */
+const accIn=$('#accIn');
+function refreshTransfer(){
+ $$('#tabType button').forEach(b=>b.classList.toggle('on',b.dataset.t===S.type));
+ $('#bankField').style.display=S.type==='bank'?'block':'none';
+ if(S.type==='bank')$('#bankSel').value=S.bank;
+ accIn.value=group(S.acc);
+ $('#accErr').classList.remove('show');accIn.classList.remove('err');
+}
+$$('#tabType button').forEach(b=>b.onclick=()=>{S.type=b.dataset.t;S.bank=S.type==='bri'?'Bank BRI':$('#bankSel').value;refreshTransfer()});
+$('#bankSel').onchange=e=>{S.bank=e.target.value};
+accIn.oninput=()=>{const d=accIn.value.replace(/\D/g,'').slice(0,16);S.acc=d;accIn.value=group(d);accIn.classList.remove('err');$('#accErr').classList.remove('show')};
+$('#saved').innerHTML=SAVED.map((p,i)=>`<button class="person" data-i="${i}"><div class="av">${initials(p.name)}</div><div><b>${p.name}</b><span class="mono">${p.bank} · ${group(p.acc)}</span></div></button>`).join('');
+$$('.person').forEach(b=>b.onclick=()=>{const p=SAVED[b.dataset.i];S.type=p.t;S.bank=p.bank;S.acc=p.acc;S.name=p.name;refreshTransfer()});
+$('#toDetail').onclick=()=>{
+ if(S.acc.length<10){$('#accErr').textContent=S.acc?'Nomor rekening terlalu pendek. Minimal 10 digit.':'Nomor rekening wajib diisi.';$('#accErr').classList.add('show');accIn.classList.add('err');accIn.focus();return}
+ S.name=lookup(S.acc);show('detail');
+};
+
+/* ===== Detail ===== */
+const amtIn=$('#amtIn');
+function validAmt(){
+ const fee=FEE[S.type];
+ let m='';
+ if(S.amount>0&&S.amount<10000)m='Nominal minimum transfer Rp 10.000.';
+ else if(S.amount+fee>12450000)m='Saldo tidak mencukupi untuk nominal dan biaya ini.';
+ $('#amtErr').textContent=m;$('#amtErr').classList.toggle('show',!!m);amtIn.classList.toggle('err',!!m);
+ $('#toConfirm').disabled=!(S.amount>=10000&&!m);
+}
+function refreshDetail(){
+ amtIn.value=S.amount?rp(S.amount):'';$('#noteIn').value=S.note;validAmt();
+}
+amtIn.oninput=()=>{const d=amtIn.value.replace(/\D/g,'').slice(0,10);S.amount=d?+d:0;amtIn.value=S.amount?rp(S.amount):'';fill();validAmt()};
+$('#noteIn').oninput=e=>{S.note=e.target.value};
+$$('.chip').forEach(c=>c.onclick=()=>{S.amount=+c.dataset.a;amtIn.value=rp(S.amount);fill();validAmt()});
+$('#toConfirm').onclick=()=>{newTx();show('confirm')};
+
+/* ===== Navigasi umum ===== */
+document.addEventListener('click',e=>{
+ const b=e.target.closest('[data-back]');if(b){back();return}
+ const g=e.target.closest('[data-goto]');if(g){
+   // "Ubah" dari konfirmasi: kembali ke layar terkait, data tetap tersimpan
+   const t=g.dataset.goto; S.stack=t==='transfer'?['home']:['home','transfer']; show(t,false); return}
+ if(e.target.closest('[data-home]'))home();
+});
+$('#btnConfirm').onclick=()=>show('auth');
+
+/* ===== Autentikasi simulasi ===== */
+let authT;
+function resetAuth(){clearTimeout(authT);$('#fpBtn').classList.remove('go');$('#fpProg').style.transition='none';$('#fpProg').style.width='0';$('#fpTxt').textContent='Ketuk untuk simulasi verifikasi'}
+$('#fpBtn').onclick=()=>{
+ if($('#fpBtn').classList.contains('go'))return;
+ $('#fpBtn').classList.add('go');$('#fpTxt').textContent='Memverifikasi (simulasi)…';
+ const p=$('#fpProg');p.style.transition='none';p.style.width='0';void p.offsetWidth;p.style.transition='width 1.4s linear';p.style.width='100%';
+ authT=setTimeout(()=>{S.stack=[];show(S.scn==='ok'?'success':'pending',false);S.stack=['home']},1500);
+};
+
+/* ===== Status belum pasti ===== */
+$('#btnCheck').onclick=()=>{
+ const btn=$('#btnCheck');if(btn.classList.contains('loading'))return;
+ btn.classList.add('loading');$('#btnCheckT').textContent='Memeriksa…';
+ setTimeout(()=>{
+  btn.classList.remove('loading');S.checks++;
+  const t=new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}).replace('.',':');
+  if(S.checks<2){
+   const b=$('#chkBox');b.textContent='Pemeriksaan pukul '+t+': transaksi masih diproses oleh bank. Belum ada kepastian. Mohon tunggu beberapa saat lalu periksa lagi — jangan ulangi transfer.';b.classList.add('show');
+   $('#btnCheckT').textContent='Periksa Lagi';
+  }else{S.scn='ok';syncSeg();toast('Status terkonfirmasi: transfer berhasil.');show('success',false);S.stack=['home']}
+ },1200);
+};
+$('#btnHelp').onclick=()=>$('#sheetBg').classList.add('show');
+$('#sheetClose').onclick=()=>$('#sheetBg').classList.remove('show');
+$('#sheetBg').onclick=e=>{if(e.target.id==='sheetBg')e.target.classList.remove('show')};
+$('#btnDetail').onclick=()=>show('receipt');
+$('#btnSave').onclick=()=>toast('Bukti disimpan (simulasi). Tidak ada file dibuat.');
+
+/* ===== Panel ===== */
+$('#jump').innerHTML=SCREENS.map((s,i)=>`<button data-s="${s[0]}"><b>${i+1}</b>${s[1]}</button>`).join('');
+$$('#jump button').forEach(b=>b.onclick=()=>{
+ defaults();const id=b.dataset.s;S.stack=['home'];
+ if(id==='home'){S.stack=[]}
+ else if(id==='detail'||id==='confirm'||id==='auth'||id==='success'||id==='pending'||id==='receipt'){S.stack=id==='receipt'?['home','success']:['home','transfer']}
+ if(id==='pending')S.scn='pending';if(id==='success'){S.scn='ok'}
+ syncSeg();show(id,false);
+});
+function setMode(m){$("#device").classList.toggle('wf',m==='wf');document.body.classList.toggle('wf',false);$$('#segMode button').forEach(b=>b.classList.toggle('on',b.dataset.v===m));show(S.cur,false)}
+$$('#segMode button').forEach(b=>b.onclick=()=>setMode(b.dataset.v));
+function syncSeg(){$$('#segScn button').forEach(b=>b.classList.toggle('on',b.dataset.v===S.scn))}
+$$('#segScn button').forEach(b=>b.onclick=()=>{S.scn=b.dataset.v;syncSeg();toast(S.scn==='ok'?'Verifikasi akan berakhir di status Berhasil.':'Verifikasi akan berakhir di status Belum Pasti.')});
+$('#resetBtn').onclick=()=>{Object.assign(S,{stack:[],type:'bri',bank:'Bank BRI',acc:'',name:'',amount:0,note:'',ref:'',checks:0});show('home',false)};
+
+/* ===== Init (hash: #confirm&wf&pending&nopanel) ===== */
+const h=location.hash.slice(1).split('&');
+if(h.includes('nopanel'))document.body.classList.add('nopanel');
+if(h.includes('pending'))S.scn='pending';
+syncSeg();
+if(h.includes('wf'))setMode('wf');
+const start=h[0]&&SCREENS.some(s=>s[0]===h[0])?h[0]:'home';
+if(start!=='home'){defaults();S.stack=['home']}
+show(start,false);
+})();
+</script>
+</body>
+</html>
