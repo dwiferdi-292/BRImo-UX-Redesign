@@ -37,9 +37,9 @@ Hubungan: Worksheet 8 (User Need) → PRD → UX-SPEC → DESIGN-SYSTEM dan INTE
 
 | Item | Status |
 |---|---|
-| PRD dan UX Skill | Selesai (draft), beberapa bagian [PERLU DIKONFIRMASI] |
+| PRD dan UX Skill | Selesai (versi 1.1, seluruh keputusan terbuka telah diputuskan penulis) |
 | Source code | Selesai (aplikasi statis, `src/index.html`), lulus pengujian otomatis lokal |
-| Deployment | Belum dilakukan (langkah di bagian Menjalankan aplikasi) |
+| Deployment | Selesai (GitHub Pages) |
 
 ## Menjalankan aplikasi
 
@@ -57,20 +57,22 @@ Berkas `src/index.html` juga dapat dibuka langsung di browser. Gunakan tampilan 
 
 **Data:** semua data bersifat contoh di sisi klien. Tidak ada transaksi nyata, API bank, PIN, OTP, atau password.
 
-**Deployment (GitHub Pages):** Settings > Pages > Deploy from a branch > `main` / root. Berkas `index.html` di root mengarahkan ke `src/index.html`. URL hasil deployment: **[PERLU DIKONFIRMASI — diisi setelah Pages aktif]**.
+**Demo online (GitHub Pages):** https://dwiferdi-292.github.io/BRImo-UX-Redesign/
+
+Untuk deploy ulang: Settings > Pages > Deploy from a branch > `main` / root. Berkas `index.html` di root mengarahkan ke `src/index.html`.
 
 ---
 
 # PRODUCT REQUIREMENTS DOCUMENT (PRD) — BRImo UX Redesign
 
-**Versi:** 1.0
+**Versi:** 1.1
 **Status:** Draft
 **Mata kuliah:** Rekayasa Interaksi (UX)
 **Penulis:** Muchammad Dwi Ferdi Ilham Arifin (NIM 202310370311292)
 **Produk:** BRImo (konsep akademik, bukan produk resmi BRI)
 **Platform:** Mobile
 
-> Tanda **[PERLU DIKONFIRMASI]** berarti informasi tidak tersedia di sumber dan perlu diputuskan atau diisi oleh penulis. Sumber utama: Worksheet 1–8 (khususnya Worksheet 8 untuk User Need).
+> Versi 1.1 (27 November 2026): seluruh tanda yang sebelumnya menandai informasi belum pasti telah diputuskan oleh penulis dan diisi pada tempatnya. Keputusan yang bukan berasal dari Worksheet 1–8 ditulis sebagai asumsi proyek akademik. Sumber utama: Worksheet 1–8 (khususnya Worksheet 8 untuk User Need).
 
 ---
 
@@ -116,7 +118,7 @@ Temuan utama dari Worksheet 5–7:
 3. Pengguna yang terburu-buru khawatir ada detail yang terlewat.
 4. Pengguna membutuhkan kepastian status setelah transfer, dan merasa tidak nyaman ketika status belum jelas.
 
-> **[PERLU DIKONFIRMASI]** Kutipan pengguna U1–U5 pada Worksheet 5 berlabel "contoh" dan berasal dari "simulasi jawaban pengguna". Temuan di atas belum divalidasi dengan wawancara pengguna nyata.
+> Keputusan penulis: kutipan pengguna U1–U5 pada Worksheet 5 berlabel "contoh" dan berasal dari "simulasi jawaban pengguna". Temuan di atas diperlakukan sebagai hipotesis awal dan tidak dinyatakan sebagai hasil wawancara pengguna nyata.
 
 ### Problem Statement
 
@@ -156,7 +158,7 @@ Nasabah BRImo membutuhkan kepastian terhadap detail transaksi sebelum melakukan 
 - Ringkasan transaksi yang jelas, terstruktur, dan mudah diperiksa sebelum konfirmasi.
 - Status transaksi yang transparan: berhasil, gagal, atau masih diproses.
 
-> Sumber persona: sintesis Worksheet 1–5. Menurut Worksheet 6, persona ini berbasis wawancara yang direncanakan atau disimulasikan dan perlu validasi dengan pengguna nyata **[PERLU DIKONFIRMASI]**.
+> Sumber persona: sintesis Worksheet 1–5. Menurut Worksheet 6, persona ini berbasis wawancara yang direncanakan atau disimulasikan. Keputusan penulis: persona diperlakukan sebagai hipotesis kerja dan belum divalidasi dengan pengguna nyata.
 
 ---
 
@@ -177,8 +179,8 @@ Produk memiliki tujuan sebagai berikut:
 | Halaman konfirmasi menampilkan nama penerima, rekening, bank, nominal, biaya, dan total | 100% transaksi |
 | Pengguna dapat kembali memperbaiki data dari halaman konfirmasi tanpa kehilangan data | 100% |
 | Status transaksi ditampilkan setelah proses konfirmasi | 100% transaksi |
-| Tingkat keyakinan pengguna sebelum konfirmasi | **[PERLU DIKONFIRMASI]** metode dan target belum ditetapkan |
-| Kesalahan transfer akibat salah input | **[PERLU DIKONFIRMASI]** baseline belum tersedia |
+| Tingkat keyakinan pengguna sebelum konfirmasi | Belum diukur pada tahap ini (tidak ada usability test pada Worksheet 1–12); diukur pada pengujian pengguna berikutnya |
+| Kesalahan transfer akibat salah input | Belum diukur; tidak ada data dasar pada sumber |
 
 Catatan: target adalah hipotesis awal dan perlu divalidasi melalui pengujian pengguna. Hasil usability test belum tersedia (Worksheet 13 kosong).
 
@@ -212,7 +214,7 @@ Sistem harus menampilkan nominal transfer secara jelas pada halaman ringkasan se
 
 Pengguna dapat kembali dari halaman konfirmasi untuk mengubah rekening tujuan atau nominal, dan data yang sudah diisi tetap tersimpan.
 
-> Dasar: User Story 2 dan alur perbaikan pada pekerjaan Worksheet 12 sebelumnya. Tidak tercantum eksplisit sebagai baris Worksheet 8 **[PERLU DIKONFIRMASI]**.
+> Dasar: User Story 2 dan alur perbaikan pada pekerjaan Worksheet 12 sebelumnya. Tidak tercantum eksplisit sebagai baris Worksheet 8. Keputusan penulis: dimasukkan sebagai requirement turunan karena mendukung tujuan pengguna memastikan detail sebelum konfirmasi.
 
 ### FR-05: Status Transaksi
 
@@ -222,7 +224,7 @@ Sistem harus menampilkan status transaksi berhasil, gagal, atau sedang diproses 
 
 Sistem harus menyediakan halaman riwayat transaksi yang memungkinkan pengguna melihat status dan detail transaksi sebelumnya (Worksheet 8, baris 5).
 
-> **[PERLU DIKONFIRMASI]** Riwayat transaksi belum ada pada prototype sebelumnya.
+> Keputusan penulis: riwayat transaksi masuk scope karena merupakan User Story 5 pada Worksheet 8. Riwayat berisi contoh transaksi sebelumnya ditambah transaksi yang dibuat pada sesi berjalan.
 
 ### FR-07: Penanganan Transaksi Bermasalah
 
@@ -234,7 +236,7 @@ Jika status transaksi belum pasti atau gagal, sistem menampilkan penjelasan sede
 
 ## 6. Non-Functional Requirements
 
-> **[PERLU DIKONFIRMASI]** Worksheet 1–8 tidak memuat kebutuhan non-fungsional. Poin berikut adalah turunan langsung dari UX Requirement Worksheet 8 dan batasan proyek akademik, dan perlu disetujui.
+> Keputusan penulis: Worksheet 1–8 tidak memuat kebutuhan non-fungsional. Poin berikut adalah turunan langsung dari UX Requirement Worksheet 8 dan batasan proyek akademik, dan disetujui penulis.
 
 ### NFR-01: Keterbacaan
 
@@ -256,14 +258,14 @@ Prototype tidak memproses transaksi sungguhan, tidak terhubung ke API bank, dan 
 
 ## 7. Business Rules
 
-> **[PERLU DIKONFIRMASI]** Aturan bisnis BRImo yang sebenarnya (batas transfer, biaya, jam layanan) tidak tersedia pada sumber. Aturan berikut hanya yang mendukung alur konfirmasi.
+> Keputusan penulis: aturan bisnis BRImo yang sebenarnya (batas transfer, biaya, jam layanan) tidak tersedia pada sumber dan tidak dibuat sendiri. Aturan berikut hanya yang mendukung alur konfirmasi.
 
 1. Transaksi tidak diproses sebelum pengguna melewati halaman konfirmasi dan tahap verifikasi.
 2. Nama penerima, nomor rekening, bank, nominal, biaya, dan total ditampilkan sebelum konfirmasi.
 3. Pengguna dapat mengubah rekening atau nominal dari halaman konfirmasi tanpa kehilangan data.
 4. Setiap transaksi memiliki satu status: berhasil, gagal, atau diproses.
 5. Tombol pengulangan transaksi tidak ditampilkan sebelum status transaksi sebelumnya diperiksa.
-6. Besar biaya administrasi dan batas nominal **[PERLU DIKONFIRMASI]**.
+6. Asumsi proyek akademik (bukan aturan BRI): biaya administrasi Rp 0 ke Bank BRI dan Rp 2.500 ke bank lain; nominal minimum Rp 10.000; saldo contoh Rp 12.450.000.
 
 ---
 
@@ -298,7 +300,7 @@ Sumber: Worksheet 8 bagian B.
 - Perbaikan data dari halaman konfirmasi.
 - Tahap verifikasi simulasi.
 - Status transaksi (berhasil dan belum pasti) serta bukti transaksi.
-- Riwayat transaksi (sesuai Worksheet 8) **[PERLU DIKONFIRMASI]**.
+- Riwayat transaksi (sesuai Worksheet 8).
 - Tampilan mobile web.
 
 ### Out of Scope
@@ -319,7 +321,7 @@ Sumber: Worksheet 8 bagian B.
 - Pengguna sudah memiliki akun BRImo dan sudah masuk.
 - Pengguna memasukkan rekening tujuan dan nominal secara manual.
 - Pencarian nama penerima dan verifikasi autentikasi disimulasikan pada prototype.
-- Wawancara pengguna nyata belum dilakukan **[PERLU DIKONFIRMASI]**.
+- Wawancara pengguna nyata belum dilakukan; Worksheet 5 berisi simulasi jawaban pengguna.
 
 ### Dependencies
 
@@ -338,7 +340,7 @@ Sumber: Worksheet 8 bagian B.
 4. Tahap verifikasi simulasi.
 5. Halaman status transaksi (berhasil dan belum pasti).
 6. Halaman bukti transaksi.
-7. Halaman riwayat transaksi **[PERLU DIKONFIRMASI]**.
+7. Halaman riwayat transaksi.
 8. Aplikasi yang dapat dijalankan dan diuji, dengan instruksi menjalankan.
 
 ---
@@ -354,7 +356,7 @@ Fitur dinyatakan memenuhi kebutuhan produk apabila:
 5. Status transaksi berhasil dan belum pasti ditampilkan dengan bahasa sederhana.
 6. Tidak ada tombol pengulangan transaksi pada status belum pasti sebelum status diperiksa.
 7. Pengguna dapat melihat bukti transaksi.
-8. Pengguna dapat melihat riwayat transaksi **[PERLU DIKONFIRMASI]**.
+8. Pengguna dapat melihat riwayat transaksi.
 9. Aplikasi dapat digunakan pada layar smartphone dan tidak meminta data perbankan asli.
 
 
