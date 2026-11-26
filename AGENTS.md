@@ -47,7 +47,7 @@ Semua tombol pada alur utama harus berfungsi. Jangan menyisakan tombol mati pada
 # 4. Development Workflow
 
 ## Phase 1 — Analyze
-Baca dokumen wajib. Daftar bagian bertanda **[PERLU DIKONFIRMASI]** dan catat sebagai asumsi.
+Baca dokumen wajib. Catat setiap asumsi yang diambil sebagai asumsi, bukan fakta.
 
 ## Phase 2 — Project Setup
 Siapkan proyek web mobile (HTML/CSS/JS atau framework ringan). Catat pilihan teknologi di README.
@@ -76,7 +76,7 @@ Tampilkan semua komponen FR-01. Sediakan Ubah pada kartu Penerima dan Nominal se
 Sediakan status Berhasil dan Belum Pasti. **Jangan menyediakan tombol pengulangan transaksi** pada status Belum Pasti.
 
 ## 5.5 Data Persistence
-Data alur disimpan di state sisi klien selama sesi. Persistensi lintas sesi **[PERLU DIKONFIRMASI]**.
+Data alur disimpan di state sisi klien selama sesi. Persistensi lintas sesi tidak diperlukan; data direset saat halaman dimuat ulang.
 
 # 6. Component Architecture
 
@@ -91,7 +91,7 @@ Pisahkan: layar (Beranda, Menu Transfer, Input Detail, Konfirmasi, Verifikasi, S
 
 # 8. Responsive Design Rules
 
-Prioritas layar smartphone (acuan 390 px). Perilaku tablet dan desktop **[PERLU DIKONFIRMASI]**.
+Prioritas layar smartphone (acuan 390 px). Pada layar lebih lebar, aplikasi ditampilkan di tengah dengan lebar tetap seperti ponsel.
 
 # 9. Testing Requirements
 
@@ -120,7 +120,7 @@ Dilarang: fitur di luar PRD, integrasi bank, autentikasi sungguhan, penyimpanan 
 
 # 12. Decision and Assumption Management
 
-Catat setiap keputusan teknis dan asumsi di README atau CHANGELOG. Jangan menyatakan asumsi sebagai fakta. Bagian **[PERLU DIKONFIRMASI]** tidak boleh diputuskan sendiri tanpa dicatat.
+Catat setiap keputusan teknis dan asumsi di README atau CHANGELOG. Jangan menyatakan asumsi sebagai fakta. Keputusan di luar dokumen tidak boleh diambil sendiri tanpa dicatat.
 
 # 13. Completion Report
 

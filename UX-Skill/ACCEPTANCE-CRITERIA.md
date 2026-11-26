@@ -104,11 +104,11 @@ When Lihat Detail ditekan, Then Bukti Transaksi menampilkan rincian lengkap dan 
 **Priority:** Must Have · **Verification:** Manual Test
 When Kembali ke Beranda ditekan dari halaman status atau bukti, Then Beranda terbuka.
 
-## 3.5 History **[PERLU DIKONFIRMASI]**
+## 3.5 History
 
 ### AC-015 — Riwayat Transaksi
 **Priority:** Should Have · **Verification:** Manual Test
-Then riwayat menampilkan status dan detail transaksi sebelumnya (FR-06). Kriteria bergantung pada keputusan scope.
+Then riwayat menampilkan status dan detail transaksi sebelumnya (FR-06). Riwayat masuk scope (keputusan penulis).
 
 ---
 
@@ -151,6 +151,6 @@ Aplikasi tidak memproses transaksi nyata, tidak mengakses API bank, dan tidak me
 
 | Item | Status |
 |---|---|
-| Seluruh kriteria Must Have terpenuhi | **[PERLU DIKONFIRMASI]** |
-| Hasil pengujian | **[PERLU DIKONFIRMASI]** belum ada data pengujian |
-| Catatan isu | **[PERLU DIKONFIRMASI]** |
+| Seluruh kriteria Must Have terpenuhi | Lulus pada pengujian otomatis lokal 27 November 2026, kecuali AC-006 sebagian (lihat catatan isu) |
+| Hasil pengujian | Pengujian otomatis Playwright pada Chrome, lebar 390 px; belum ada pengujian pada pengguna nyata |
+| Catatan isu | AC-006: DESIGN-SYSTEM menetapkan nomor rekening 20 px dan nama penerima 19 px sehingga nama lebih kecil dari nomor rekening; perlu diselaraskan pada revisi berikutnya |

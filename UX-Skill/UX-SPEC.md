@@ -6,7 +6,7 @@
 **Referensi:** [PRD_BRImo.md](../PRD/PRD_BRImo.md) v1.0
 **Status:** Draft
 
-> Konsep akademik, bukan produk resmi BRI. Tanda **[PERLU DIKONFIRMASI]** menandai informasi yang tidak ada di sumber.
+> Konsep akademik, bukan produk resmi BRI. Versi 1.1: informasi yang sebelumnya belum pasti telah diputuskan penulis.
 
 ---
 
@@ -53,7 +53,7 @@ Pengguna membuka beranda, memilih Transfer, memasukkan rekening tujuan, mengisi 
 
 # 3. Information Architecture (IA)
 
-> Worksheet 9 (IA) dilewati. Struktur di bawah diturunkan dari prototype Worksheet 12 sebelumnya **[PERLU DIKONFIRMASI]**.
+> Worksheet 9 (IA) dilewati. Struktur di bawah diturunkan dari prototype Worksheet 12 sebelumnya dan disetujui penulis.
 
 ## 3.1 Sitemap
 
@@ -66,7 +66,7 @@ Pengguna membuka beranda, memilih Transfer, memasukkan rekening tujuan, mengisi 
 │   ├── Verifikasi (simulasi)
 │   └── Status Transaksi (Berhasil | Belum Pasti)
 │       └── Bukti Transaksi
-└── Riwayat Transaksi [PERLU DIKONFIRMASI]
+└── Riwayat Transaksi
 ```
 
 ## 3.2 Primary Navigation
@@ -179,7 +179,7 @@ Menyimpan bukti (simulasi); kembali.
 ### Expected Outcome
 Pengguna memiliki bukti transaksi.
 
-## PAGE-08: Riwayat Transaksi **[PERLU DIKONFIRMASI]**
+## PAGE-08: Riwayat Transaksi
 
 ### Purpose
 Melihat kembali status dan detail transaksi sebelumnya (FR-06).
@@ -221,14 +221,14 @@ Detail perilaku ada di [INTERACTION-SPEC.md](INTERACTION-SPEC.md).
 
 # 7. Responsive Experience
 
-Fokus pada mobile (lebar 390 px pada prototype). Perilaku pada tablet dan desktop **[PERLU DIKONFIRMASI]**.
+Fokus pada mobile (lebar 390 px pada prototype). Pada tablet dan desktop, aplikasi tampil di tengah dengan lebar tetap seperti ponsel.
 
 ---
 
 # 8. Empty States
 
-- Riwayat Transaksi kosong **[PERLU DIKONFIRMASI]**: pesan bahwa belum ada transaksi.
-- Daftar penerima tersimpan kosong: bagian disembunyikan **[PERLU DIKONFIRMASI]**.
+- Riwayat Transaksi kosong: tampil pesan bahwa belum ada transaksi.
+- Daftar penerima tersimpan kosong: bagian disembunyikan.
 
 ---
 
@@ -255,4 +255,4 @@ Fokus pada mobile (lebar 390 px pada prototype). Perilaku pada tablet dan deskto
 - Tidak mengklaim sebagai desain resmi BRI.
 - Tidak meminta PIN, OTP, password, atau data perbankan asli.
 - Tidak menambah fitur di luar kebutuhan Worksheet 1–8.
-- Hasil usability test belum tersedia **[PERLU DIKONFIRMASI]**.
+- Hasil usability test belum tersedia; tidak ada Worksheet usability test pada proyek ini.

@@ -10,7 +10,7 @@
 - [UX-SPEC.md](UX-SPEC.md) v1.0
 - [DESIGN-SYSTEM.md](DESIGN-SYSTEM.md) v1.0
 
-> Perilaku berasal dari prototype Worksheet 12 yang telah diuji alurnya. Hal yang tidak ada di sumber ditandai **[PERLU DIKONFIRMASI]**.
+> Perilaku berasal dari prototype Worksheet 12 yang telah diuji alurnya. Hal yang tidak ada di sumber diputuskan penulis dan ditulis sebagai asumsi.
 
 ---
 
@@ -50,7 +50,7 @@ Proses verifikasi simulasi dan pemeriksaan status menampilkan indikator proses d
 
 ## 2.3 Global Error Handling
 
-Pesan kesalahan memakai bahasa sederhana dan menyebut cara memperbaikinya. Kegagalan jaringan nyata **[PERLU DIKONFIRMASI]** (prototype tidak memakai jaringan).
+Pesan kesalahan memakai bahasa sederhana dan menyebut cara memperbaikinya. Kegagalan jaringan nyata tidak dicakup (prototype tidak memakai jaringan).
 
 ---
 
@@ -88,7 +88,7 @@ Input hanya menerima angka, maksimal 16 digit, dikelompokkan per 4 digit.
 | Nominal + biaya melebihi saldo | Pesan saldo tidak mencukupi; tombol nonaktif |
 | Valid | Tombol aktif |
 
-Batas minimum dan biaya pada prototype adalah contoh **[PERLU DIKONFIRMASI]**.
+Batas minimum dan biaya pada prototype adalah asumsi proyek akademik.
 
 ---
 
@@ -139,9 +139,9 @@ Tidak ada input PIN, OTP, atau password.
 - Hubungi Bantuan membuka lembar bantuan simulasi.
 - **Tidak ada tombol pengulangan transaksi.**
 
-## 7.3 Gagal **[PERLU DIKONFIRMASI]**
+## 7.3 Gagal
 
-Layar status gagal belum dirancang secara terpisah.
+Keputusan penulis: layar status gagal terpisah tidak dibuat pada cakupan ini; kondisi tidak pasti ditangani oleh status Belum Pasti.
 
 ---
 
@@ -153,9 +153,9 @@ Layar status gagal belum dirancang secara terpisah.
 
 ---
 
-# 9. History Interaction **[PERLU DIKONFIRMASI]**
+# 9. History Interaction
 
-Riwayat transaksi (FR-06) belum dirancang. Perilaku belum didefinisikan.
+Riwayat transaksi (FR-06): daftar transaksi terbaru di atas. Ketuk transaksi berhasil membuka Bukti Transaksi; ketuk transaksi yang masih diproses membuka Status Belum Pasti. Jika kosong, tampil pesan "Belum ada transaksi." Tombol Kembali ke Beranda tersedia.
 
 ---
 

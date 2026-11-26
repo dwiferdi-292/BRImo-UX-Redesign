@@ -6,7 +6,7 @@
 **Referensi:** [PRD_BRImo.md](../PRD/PRD_BRImo.md), [UX-SPEC.md](UX-SPEC.md)
 **Status:** Draft
 
-> Nilai di bawah diambil dari prototype Worksheet 12 yang dibuat sebelumnya. Desain ini terinspirasi tampilan aplikasi perbankan seluler dan **bukan desain resmi BRI**. Nilai identitas resmi BRI tidak tersedia **[PERLU DIKONFIRMASI]**.
+> Nilai di bawah diambil dari prototype Worksheet 12 yang dibuat sebelumnya. Desain ini terinspirasi tampilan aplikasi perbankan seluler dan **bukan desain resmi BRI**. Nilai identitas resmi BRI tidak dipakai; warna dan logo pada desain ini bukan identitas resmi BRI.
 
 ---
 
@@ -60,7 +60,7 @@ Tampilan bersih seperti aplikasi mobile banking: kartu putih di atas latar abu m
 |---|---|---|
 | Berhasil | `--ok` | Centang |
 | Belum pasti / diproses | `--warn` | Jam |
-| Gagal | `--err` | **[PERLU DIKONFIRMASI]** belum ada layar gagal terpisah |
+| Gagal | `--err` | dipakai untuk pesan kesalahan input; layar gagal terpisah tidak dibuat |
 
 ---
 
@@ -106,7 +106,7 @@ Satu kolom. Bilah atas (judul dan tombol kembali), indikator langkah, area gulir
 
 ## 5.2 Responsive Breakpoints
 
-Prototype memakai lebar 390 px × 844 px. Breakpoint lain **[PERLU DIKONFIRMASI]**.
+Prototype memakai lebar 390 px × 844 px. Breakpoint lain tidak digunakan; satu lebar tetap.
 
 ---
 
@@ -180,7 +180,7 @@ Token CSS: `--pri`, `--pri-d`, `--acc`, `--bg`, `--card`, `--tx`, `--mut`, `--li
 - Tombol ikon memiliki `aria-label`.
 - Pesan kesalahan memakai `role="alert"`.
 - Status tidak hanya dibedakan warna, tetapi juga ikon dan teks.
-- Kontras warna teks terhadap latar diverifikasi **[PERLU DIKONFIRMASI]**.
+- Kontras warna teks terhadap latar belum diukur dengan alat kontras; hanya ditinjau visual.
 
 ---
 
