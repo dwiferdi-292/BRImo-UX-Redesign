@@ -20,7 +20,7 @@ Format mengikuti Keep a Changelog. Hanya mencatat perubahan yang benar-benar ter
 - Perbaikan teks: nama persona pada beranda diselaraskan menjadi "Dimas Pratama" sesuai PRD.
 - Prompt iterasi ke agent: 1 (pembuatan awal, dari prototype Worksheet 12) + 1 (penambahan Riwayat). Perbaikan setelah hasil pertama: 0.
 
-### Asumsi yang diambil pada bagian [PERLU DIKONFIRMASI]
+### Asumsi yang diambil pada bagian yang belum pasti
 - Biaya admin Rp 0 ke Bank BRI, Rp 2.500 ke bank lain; minimum Rp 10.000 (sesuai UX-SPEC/prototype).
 - Riwayat: 3 transaksi contoh + transaksi baru; ketuk transaksi berhasil membuka Bukti, transaksi diproses membuka Status Belum Pasti.
 
@@ -35,8 +35,13 @@ Format mengikuti Keep a Changelog. Hanya mencatat perubahan yang benar-benar ter
 - Belum diuji: perangkat nyata, browser selain Chrome, deployment.
 
 ### Keterbatasan eksperimen
-- Aplikasi B berasal dari prototype Worksheet 12 yang sama dengan sumber UX Skill, sehingga kesesuaiannya dengan dokumen tinggi secara alami. Waktu pengembangan: [PERLU DIKONFIRMASI].
+- Aplikasi B berasal dari prototype Worksheet 12 yang sama dengan sumber UX Skill, sehingga kesesuaiannya dengan dokumen tinggi secara alami. Waktu pengembangan: sesi 2026-11-26 hingga 2026-11-27 (jam mulai/selesai tidak dicatat).
+
+### Diperbarui (dokumen v1.1, 2026-11-27)
+- Seluruh tanda yang sebelumnya menandai informasi belum pasti telah diputuskan penulis dan diisi di PRD, README, dan (pada repo B) AGENTS.md serta UX-Skill. Keputusan mengikuti Worksheet 1–8: wawancara tetap berstatus simulasi, riwayat masuk scope (User Story 5), biaya dan batas nominal ditulis sebagai asumsi proyek akademik.
+- Catatan: aplikasi pada src/ dibangun dari dokumen v1.0. Perubahan v1.1 menyelaraskan teks dengan keputusan yang sudah dipakai aplikasi dan tidak mengubah kodenya.
+- Tanggal unggah ke GitHub: 2026-11-27. Demo GitHub Pages aktif pada hari yang sama.
 
 ### Belum dikerjakan
 - Deployment.
-- Tanggal commit dan iterasi prompting AI coding agent: [PERLU DIKONFIRMASI] (catat setiap iterasi di sini saat dikerjakan).
+- Pengujian pada pengguna nyata dan usability test.
